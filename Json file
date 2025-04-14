@@ -1,0 +1,13 @@
+{
+    "title": "Kabir Singh",
+    "director": "KVN",
+    "studio": 2,
+    "releaseYear": 2020,
+    "movieCast": [
+        "Leonardo DiCaprio",
+        "Joseph Gordon-Levitt",
+        "Elliot Page"
+    ],
+    "poster": "backend.png",
+    "posterUrl": "http://localhost:8080/backend.png"
+}
