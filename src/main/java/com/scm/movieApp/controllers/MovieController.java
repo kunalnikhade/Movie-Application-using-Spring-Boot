@@ -8,6 +8,7 @@ import com.scm.movieApp.service.MovieService;
 import com.scm.movieApp.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class MovieController
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @PostMapping("/add-movie")
+    @PostMapping(value = "/add-movie", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MovieDto> addMovieHandler(@RequestPart MultipartFile file, @RequestPart String movieDtoJson) throws IOException, EmptyFileException
     {
         // Convert the JSON string to a MovieDto object
@@ -44,19 +45,19 @@ public class MovieController
         return new ResponseEntity<>(movieService.addMovie(movieDto, file), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{movieId}")
+    @GetMapping(value = "/{movieId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MovieDto> getMovieById(@PathVariable Integer movieId)
     {
         return new ResponseEntity<>(movieService.getMovieById(movieId), HttpStatus.OK);
     }
 
-    @GetMapping("/all-movies")
+    @GetMapping(value = "/all-movies", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<MovieDto>> getAllMovies()
     {
         return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.OK);
     }
 
-    @PutMapping("/update/{movieId}")
+    @PutMapping(value = "/update/{movieId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MovieDto> updateMovieById(@PathVariable Integer movieId, @RequestPart String movieDtoJson, @RequestPart MultipartFile file) throws IOException
     {
         // Convert the JSON string to a MovieDto object
@@ -65,14 +66,14 @@ public class MovieController
         return ResponseEntity.ok(movieService.updateMovie(movieDto, file, movieId));
     }
 
-    @DeleteMapping("/delete/{movieId}")
+    @DeleteMapping(value = "/delete/{movieId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MovieDto> deleteMovieById(@PathVariable Integer movieId)
     {
         movieService.deleteMovie(movieId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/allMoviePages")
+    @GetMapping(value = "/allMoviePages", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MoviePageResponse> getMoviesWithPagination(
             @RequestParam(defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestParam(defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize)
@@ -80,7 +81,7 @@ public class MovieController
         return ResponseEntity.ok(movieService.getAllMoviesWithPagination(pageNumber, pageSize));
     }
 
-    @GetMapping("/allMoviePages-Sort")
+    @GetMapping(value = "/allMoviePages-Sort", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MoviePageResponse> getMoviesWithPaginationAndSorting(
             @RequestParam(defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestParam(defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,

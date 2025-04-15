@@ -10,6 +10,7 @@ import com.scm.movieApp.utils.LoginRequest;
 import com.scm.movieApp.utils.RefreshTokenRequest;
 import com.scm.movieApp.utils.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,19 +32,19 @@ public class UserController
         this.jwtService = jwtService;
     }
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> getRegister(@RequestBody RegisterRequest registerRequest)
     {
         return ResponseEntity.ok(userService.register(registerRequest));
     }
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> getLogin(@RequestBody LoginRequest loginRequest)
     {
         return ResponseEntity.ok(userService.verify(loginRequest));
     }
 
-    @PostMapping("/refresh")
+    @PostMapping(value = "/refresh", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> getRefreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest)
     {
         RefreshToken refreshToken = refreshTokenService.verifyRefreshToken(refreshTokenRequest.getRefreshToken());

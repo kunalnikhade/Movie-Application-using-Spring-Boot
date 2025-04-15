@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -42,6 +43,7 @@ public class MovieServiceImpl implements MovieService
     }
 
     @Override
+    @Transactional
     public MovieDto addMovie(MovieDto movieDto, MultipartFile file) throws IOException
     {
         if(Files.exists(Paths.get(path + File.separator + file.getOriginalFilename())))
@@ -63,6 +65,7 @@ public class MovieServiceImpl implements MovieService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MovieDto getMovieById(Integer movieId)
     {
         MovieEntity movieEntity = movieRepository.findById(movieId)
@@ -72,6 +75,7 @@ public class MovieServiceImpl implements MovieService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<MovieDto> getAllMovies()
     {
         List<MovieEntity> movieEntities = movieRepository.findAll();
@@ -79,6 +83,7 @@ public class MovieServiceImpl implements MovieService
     }
 
     @Override
+    @Transactional
     public MovieDto updateMovie(MovieDto movieDto, MultipartFile file, Integer movieId) throws IOException
     {
         MovieEntity movieEntity = movieRepository.findById(movieId)
@@ -109,6 +114,7 @@ public class MovieServiceImpl implements MovieService
 
 
     @Override
+    @Transactional
     public void deleteMovie(Integer movieId)
     {
         MovieEntity movieEntity = movieRepository.findById(movieId)
@@ -117,6 +123,7 @@ public class MovieServiceImpl implements MovieService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MoviePageResponse getAllMoviesWithPagination(Integer pageNumber, Integer pageSize)
     {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
@@ -125,6 +132,7 @@ public class MovieServiceImpl implements MovieService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MoviePageResponse getAllMoviesWithPaginationAndSorting(Integer pageNumber, Integer pageSize, String sortBy, String direction)
     {
         Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()

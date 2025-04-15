@@ -28,7 +28,7 @@ public class FileController
         this.fileService = fileService;
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> uploadFileHandler(@RequestPart MultipartFile file) throws IOException
     {
         String uploadedFileName = fileService.uploadFile(path, file);
@@ -36,7 +36,7 @@ public class FileController
         return ResponseEntity.ok("Uploaded file: " + uploadedFileName);
     }
 
-    @GetMapping("/{fileName}")
+    @GetMapping(value = "/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public void getFileHandler(@PathVariable String fileName, HttpServletResponse response) throws IOException
     {
         InputStream resourceFile = fileService.getResourceFile(path, fileName);

@@ -9,6 +9,7 @@ import com.scm.movieApp.repository.UserRepository;
 import com.scm.movieApp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,7 +38,7 @@ public class ForgotPasswordController
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @PostMapping("/verifyEmail/{email}")
+    @PostMapping(value = "/verifyEmail/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> verifyEmail(@PathVariable String email)
     {
         Users user = userRepository.findByEmail(email)
@@ -65,7 +66,7 @@ public class ForgotPasswordController
         return ResponseEntity.ok("Verification email sent");
     }
 
-    @PostMapping("/verifyOtp/{otp}/{email}")
+    @PostMapping(value = "/verifyOtp/{otp}/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> verifyOtp(@PathVariable Integer otp, @PathVariable String email)
     {
         Users user = userRepository.findByEmail(email)
@@ -82,7 +83,7 @@ public class ForgotPasswordController
         return ResponseEntity.ok("OTP verified");
     }
 
-    @PostMapping("/changePassword/{email}")
+    @PostMapping(value = "/changePassword/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> changePassword(@RequestBody ChangePassword changePassword, @PathVariable String email)
     {
         if(!Objects.equals(changePassword.password(), changePassword.repeatPassword()))

@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService
@@ -31,6 +32,7 @@ public class UserService
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
+    @Transactional
     public AuthResponse register(RegisterRequest registerRequest)
     {
         var user = Users.builder()
@@ -51,6 +53,7 @@ public class UserService
                 .build();
     }
 
+    @Transactional
     public AuthResponse verify(LoginRequest loginRequest)
     {
         authenticationManager.authenticate(

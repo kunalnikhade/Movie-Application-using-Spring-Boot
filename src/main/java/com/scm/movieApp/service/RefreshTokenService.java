@@ -8,6 +8,7 @@ import com.scm.movieApp.repository.RefreshTokenRepository;
 import com.scm.movieApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -25,6 +26,7 @@ public class RefreshTokenService
         this.refreshTokenRepository = refreshTokenRepository;
     }
 
+    @Transactional
     public RefreshToken createRefreshToken(String username)
     {
         Users user = userRepository.findByEmail(username)
@@ -46,6 +48,7 @@ public class RefreshTokenService
         return refreshToken;
     }
 
+    @Transactional
     public RefreshToken verifyRefreshToken(String refreshToken)
     {
         RefreshToken refToken = refreshTokenRepository.findByRefreshToken(refreshToken);

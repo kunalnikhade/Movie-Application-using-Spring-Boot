@@ -1,6 +1,7 @@
 package com.scm.movieApp.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
 public class FileServiceImpl implements FileService
 {
     @Override
+    @Transactional
     public String uploadFile(String path, MultipartFile file) throws IOException
     {
         // Get the file name from the multipart file
@@ -33,6 +35,7 @@ public class FileServiceImpl implements FileService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public InputStream getResourceFile(String path, String fileName) throws IOException
     {
         String filePath = path + File.separator + fileName;
