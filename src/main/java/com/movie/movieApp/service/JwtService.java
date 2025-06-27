@@ -17,21 +17,21 @@ import java.util.function.Function;
 @Service
 public class JwtService
 {
-    private String secretKey = "";
+    private String secretKey = "123456QqWwEeRrTtPpOoIiUuYyAaSsDdFfGgLlKkJjHh12345109876qwerty";
 
-    public JwtService()
-    {
-        try
-        {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
-            SecretKey sk = keyGenerator.generateKey();
-            secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
+//    public JwtService()
+//    {
+//        try
+//        {
+//            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
+//            SecretKey sk = keyGenerator.generateKey();
+//            secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+//        }
+//        catch (NoSuchAlgorithmException e)
+//        {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public String generateToken(String username)
     {

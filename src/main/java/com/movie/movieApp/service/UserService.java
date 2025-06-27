@@ -50,6 +50,8 @@ public class UserService
         return AuthResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken.getRefreshToken())
+                .email(savedUser.getEmail())
+                .username(savedUser.getUsername())
                 .build();
     }
 
@@ -67,6 +69,8 @@ public class UserService
         return AuthResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken.getRefreshToken())
+                .email(user.getEmail())
+                .username(user.getUsername())
                 .build();
     }
 }
